@@ -4,11 +4,11 @@
 <style>
 
 
-.progressClass {
+.progress {
 float: left;
-    width: 400px;
+    width: 800px;
     height: 20px;
-    border: 0.05rem solid orange;
+    border: 0.05rem solid red;
   }
 
   <!-- #progressBar1 { -->
@@ -28,20 +28,15 @@ float: left;
 	
   }
   
-  #progressBar1Full {
-   width: 400px;
+  #progressBarFull {
+   width: 50%;
     height: 20px;
     background-color: yellow;
-   
   }
   
    
   
-  #progressBar2Full {
-    width: 400px;
-	 height: 20px;
-    background-color: red;
-	}
+  
 	
   </style>
 </head>
@@ -62,14 +57,10 @@ float: left;
 	
 	<div id="progressBar" class="progress">
 	
-	  <div id="progressBar1" class="progressClass">
-                    <div id="progressBar1Full" class="progressClass"></div>
-                    </div>
+	       <div id="progressBarFull" class="progressClass"></div>
+    </div>
                  
-	  <div id="progressBar2" class="progressClass">
-                    <div id="progressBar2Full" class="progressClass"></div>
-                     </div> 
-           </div>
+	 
 	
 <canvas id="gameCanvas" width="800" height="600"></canvas>
            
@@ -87,10 +78,9 @@ var ballSpeedY = 4;
 
 var player1Score = 0;
 var player2Score = 0;
-//const myWinningScore = () => {
-	const d = document.querySelector('#dselector')
-	//console.log(WINNING_SCORE);
-//}
+
+const d = document.querySelector('#dselector')
+
 var showingWinScreen = false;
 
 var paddle1Y = 250;
@@ -98,7 +88,12 @@ var paddle2Y = 250;
 const PADDLE_THICKNESS = 10;
 const PADDLE_HEIGHT = 100;
 
-// const s = document.querySelector('#myform')
+const progressBarFull = document.getElementById("progressBarFull");
+var initialWidth = 50;
+var x = 0;
+var y = 0;
+var z = 0;
+
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -126,6 +121,15 @@ window.onload = function() {
 	var framesPerSecond = 30;
 	setInterval(function() {
 			moveEverything();
+			if(player2Score > z)
+			{
+				progressPlayer2();
+			}
+			else if(player1Score > y)
+			{
+				progressPlayer1();
+			}
+			
 			drawEverything();	
 		}, 1000/framesPerSecond);
 
@@ -173,6 +177,8 @@ function moveEverything() {
 	ballY = ballY + ballSpeedY;
 	
 	if(ballX < 0) {
+	
+	
 		if(ballY > paddle1Y &&
 			ballY < paddle1Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
@@ -181,11 +187,19 @@ function moveEverything() {
 					-(paddle1Y+PADDLE_HEIGHT/2);
 			ballSpeedY = deltaY * 0.35;
 		} else {
-			player2Score++; // must be BEFORE ballReset()
+		
+			//progressPlayer2();
+			
+				//player2Score++;  // must be BEFORE ballReset()
+			z = player2Score;
+			player2Score = z+1;
+
 			ballReset();
 		}
 	}
 	if(ballX > canvas.width) {
+	
+	
 		if(ballY > paddle2Y &&
 			ballY < paddle2Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
@@ -194,7 +208,12 @@ function moveEverything() {
 					-(paddle2Y+PADDLE_HEIGHT/2);
 			ballSpeedY = deltaY * 0.35;
 		} else {
-			player1Score++; // must be BEFORE ballReset()
+			//progressPlayer1();
+			
+			//player1Score++;	// must be BEFORE ballReset()
+			y = player1Score;
+			player1Score = y+1;
+			
 			ballReset();	
 		}
 	}
@@ -236,7 +255,7 @@ function drawEverything() {
 	colorRect(0,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'yellow');
 
 	// this is right computer paddle
-	colorRect(canvas.width-PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'red');
+	colorRect(canvas.width-PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
 
 	// next line draws the ball
 	colorCircle(ballX, ballY, 10, 'white');
@@ -257,12 +276,23 @@ function colorRect(leftX,topY, width,height, drawColor) {
 	canvasContext.fillRect(leftX,topY, width,height);
 }
 
+ function progressPlayer1 () { 
 
+	 var WINNING_SCORE = d.options[d.selectedIndex].value 
+	 x = `${(initialWidth + 50/WINNING_SCORE)}%`; 
+	 progressBarFull.style.width = x; 
+	 initialWidth = progressBarFull.style.width; 
 
+ }
 
-
-
-//});
+  function progressPlayer2 () { 
+	var WINNING_SCORE = d.options[d.selectedIndex].value
+	x = `${(initialWidth - 50/WINNING_SCORE)}%`;
+	progressBarFull.style.width = x;
+	initialWidth = progressBarFull.style.width;
+	
+}
+ 
 </script>
 
 </body>
