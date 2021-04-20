@@ -1,12 +1,79 @@
 <html>
 
-<canvas id="gameCanvas" width="800" height="600"></canvas>
+<head>
+<style>
+
+
+.progressClass {
+float: left;
+    width: 400px;
+    height: 20px;
+    border: 0.05rem solid orange;
+  }
+
+  <!-- #progressBar1 { -->
+ <!-- display: flex; -->
+ <!-- justify-content: left; -->
+    <!-- width: 400px; -->
+    <!-- height: 20px; -->
+    <!-- border: 0.05rem solid orange; -->
+	<!-- margin-top: 20px; -->
+  <!-- } -->
+  
+  <!-- #progressBar2 { -->
+    <!-- width: 400px; -->
+    <!-- height: 20px; -->
+    <!-- border: 0.05rem solid orange; -->
+    <!-- margin-left: 400px;  -->
+	
+  }
+  
+  #progressBar1Full {
+   width: 400px;
+    height: 20px;
+    background-color: yellow;
+   
+  }
+  
+   
+  
+  #progressBar2Full {
+    width: 400px;
+	 height: 20px;
+    background-color: red;
+	}
+	
+  </style>
+</head>
+
+<div id "selector">
  <p>Select the Winning Score Here: </p>(Default is 3)
 <select id="dselector">
 <option value=3 selected>3</option>
+<option value=4> 4</option>
 <option value=5> 5</option>
+<option value=6> 6</option>
 <option value=7> 7</option>
+<option value=8> 8</option>
+<option value=9> 9</option>
+<option value=10> 10</option>
 </select>
+</div>
+	
+	<div id="progressBar" class="progress">
+	
+	  <div id="progressBar1" class="progressClass">
+                    <div id="progressBar1Full" class="progressClass"></div>
+                    </div>
+                 
+	  <div id="progressBar2" class="progressClass">
+                    <div id="progressBar2Full" class="progressClass"></div>
+                     </div> 
+           </div>
+	
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+           
+
   
 <body>
 <script>
@@ -169,7 +236,7 @@ function drawEverything() {
 	colorRect(0,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'yellow');
 
 	// this is right computer paddle
-	colorRect(canvas.width-PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'yellow');
+	colorRect(canvas.width-PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'red');
 
 	// next line draws the ball
 	colorCircle(ballX, ballY, 10, 'white');
